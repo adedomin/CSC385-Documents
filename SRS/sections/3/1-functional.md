@@ -9,39 +9,39 @@ As this web application deals with highly sensitive customer data, it shall log 
 ### 3.1.1. General logging
 
   1. The web application shall log all requests made to the application.
-    1.1. The web application will take a particular focus to log transactions:
-	  1.1.1. Withdrawls, the removal of money from an account.
-	  1.1.2. Deposits, the addition of cash into an account.
-	  1.1.3. Transfers, Inter-account movement of cash.
-	  1.1.4. Bill pay, payment of bills to sponsered partners.
-	1.2. The web application shall also log all HTTP requests.
-	  1.2.1. The web application shall log, the full path and the HTTP verb (e.g. GET /some/path).
-	  1.2.2. The web application shall log, the IP of the requestee.
-	  1.2.3. The web application shall log, if the user is authenticated; if so record this user's name.
-	  1.2.4. The web application shall log, the time of the request, likely in ISO 8601 format, TBH.
-	  1.2.5. The web application shall log, all java errors, exceptions or unexpected errors in the business logic.
-	  1.2.6. The web application shall log all unauthorized requests.
-    1.3. The web application shall log all changes to the user's account.
-	  1.3.1. Such changes as, if a user changes their login name.
-	  1.3.2. The web application shall log when a user changes their email.
-	  1.3.3. The web application shall log when a user a user does password recovery.
-	  1.3.4. The web application shall log when a user changes their billing a address.
-	  1.3.5. The web application shall log when a user requests or changes their notification settints.
-	  1.3.6. The web application shall log when a user adds an account.
-	  1.3.7. The web application shall log when a user removes an account.
-	  1.3.8. The web application shall log when a user adds a recurring job (cron, etc).
-	  1.3.9. The web application shall log when a user removes a recurring job (cron, etc).
+    1. The web application will take a particular focus to log transactions:
+        1. Withdrawls, the removal of money from an account.
+        2. Deposits, the addition of cash into an account.
+        3. Transfers, Inter-account movement of cash.
+        4. Bill pay, payment of bills to sponsered partners.
+    2. The web application shall also log all HTTP requests.
+        1. The web application shall log, the full path and the HTTP verb (e.g. GET /some/path).
+        2. The web application shall log, the IP of the requestee.
+        3. The web application shall log, if the user is authenticated; if so record this user's name.
+        4. The web application shall log, the time of the request, likely in ISO 8601 format, TBH.
+        5. The web application shall log, all java errors, exceptions or unexpected errors in the business logic.
+        6. The web application shall log all unauthorized requests.
+    3. The web application shall log all changes to the user's account.
+        1. Such changes as, if a user changes their login name.
+        2. The web application shall log when a user changes their email.
+        3. The web application shall log when a user a user does password recovery.
+        4. The web application shall log when a user changes their billing a address.
+        5. The web application shall log when a user requests or changes their notification settints.
+        6. The web application shall log when a user adds an account.
+        7. The web application shall log when a user removes an account.
+        8. The web application shall log when a user adds a recurring job (cron, etc).
+        9. The web application shall log when a user removes a recurring job (cron, etc).
 
 ### 3.1.2. Storage of Logs
 
   2. The web application must store logs both redundantly for security reason, but ensure the logs are easily readable to both humans and batch processing software as well.
-    2.1 The web application shall use the storage offered by the hardware it resides on.
-	   2.1.1.  The web application shall write to the disk provided by the hardware platform it executes
-	     2.1.1.1. **UNLESS** the web application is on a PaaS architecture that does not provide any disk access. 
-    2.2. The web application shall store logs on remote systems such as a database and a log server 
-      2.2.1.  The web application shall store logs off-site, where it will be kept redundantly, will be compress and where the logs will be rotated daily.
-      2.2.2.  The web application shall store logs in MongoDB to assist in the performance of batch analysis of the logs and to allow for multiple concurrent readers of the log.
-      2.2.3.  The web application shall conform to a schema for both plaintext form and database form 
+    1. The web application shall use the storage offered by the hardware it resides on.
+		1. The web application shall write to the disk provided by the hardware platform it executes
+		2. **UNLESS** the web application is on a PaaS architecture that does not provide any disk access. 
+	2. The web application shall store logs on remote systems such as a database and a log server 
+		1. The web application shall store logs off-site, where it will be kept redundantly, will be compress and where the logs will be rotated daily.
+		2. The web application shall store logs in MongoDB to assist in the performance of batch analysis of the logs and to allow for multiple concurrent readers of the log.
+		3. The web application shall conform to a schema for both plaintext form and database form 
 
 ### 3.1.3. Notifications
 
@@ -50,24 +50,71 @@ Notifications can be sent over services like email, texts, phone notifications o
 Notifications should be useful to the user and should only expose a part of what is logged.
 
   3. The web application shall offer a part of what it logs to be sent to a user in a variety of forms.
-    3.1. The web application shall provide logging information pertaining to the following.
-	  3.1.1. The web application shall allow users to be notified to all changes to their accounts. (as shown in functional spec 3.1.1.3.).
-	  3.1.2. The web application shall allow users to be notified to all transactions logged. (as shown in functional spec 3.1.1.1.)
-	  3.1.3 users shall be able to remove notifications from the web app.
-    3.2. The web application shall store pending notifications in form of a FIFO queue.
-	  3.2.1. The queue will include all notifications that the user has not recieved.
-	  3.2.2. If the user has no notifications, the queue shall always be empty.
-	  3.2.3. As th euser reads the notifications they shall be removed.
-	  3.2.4. notifications shall only have a life of 24 hours.
-    3.3. The web application shall provide the following mechanisms for notifying the user.
-	  3.3.1. The web app will allow users to specify their registered emails as a place to send their notifications.
-	  3.3.2. The web app will allow users to retrieve RSS feeds of their recent alerts.
-	  3.3.3. The web application will allow users to use our banking notification app to retrieve notifications.
-	  3.3.4. The web application will also allow users to specify a website url to call when notifications become available which will allow users to use their own notification services or a third party notification service. 
-	    3.3.4.1 all notification data will be sent via a POST or PUT and only over a secure connection.
+    1. The web application shall provide logging information pertaining to the following.
+		1. The web application shall allow users to be notified to all changes to their accounts. (as shown in functional spec 3.1.1.3.).
+		2. The web application shall allow users to be notified to all transactions logged. (as shown in functional spec 3.1.1.1.)
+		3. Users shall be able to remove notifications from the web app.
+    2. The web application shall store pending notifications in form of a FIFO queue.
+		1. The queue will include all notifications that the user has not recieved.
+		2. If the user has no notifications, the queue shall always be empty.
+		3. As th euser reads the notifications they shall be removed.
+		4. notifications shall only have a life of 24 hours.
+    3. The web application shall provide the following mechanisms for notifying the user.
+		1. The web app will allow users to specify their registered emails as a place to send their notifications.
+		2. The web app will allow users to retrieve RSS feeds of their recent alerts.
+		3. The web application will allow users to use our banking notification app to retrieve notifications.
+		4. The web application will also allow users to specify a website url to call when notifications become available which will allow users to use their own notification services or a third party notification service. 
+			1. all notification data will be sent via a POST or PUT and only over a secure connection.
 
-### 3.1.4. User Views and Interactions
+### 3.1.4. Views, APIs and Interactions
 
 The user shall have the ability to view things such as current account balance and to do things like create new accouts, transfer money between accounts and so on.
 
+This is the list of all API routes
 
+Verb   Path                                          Role
+------ --------------------------------------------- ----
+GET    /                                             NONE
+GET    /login                                        NONE
+POST   /login                                        NONE
+GET    /logout                                       NONE
+GET    /signup                                       NONE
+POST   /signup                                       NONE
+***
+GET    /api/v1/user                                  USER
+POST   /api/v1/user                                  USER
+GET    /api/v1/user/[id]                             ADMN
+POST   /api/v1/user/[id]                             ADMN
+***
+GET    /api/v1/accounts                              USER
+POST   /api/v1/accounts                              USER
+POST   /api/v1/accounts/new                          USER
+GET    /api/v1/accounts/[id]                         USER
+DELETE /api/v1/accounts/[id]                         ADMN
+GET    /api/v1/accounts/search/[name]                USER
+POST   /api/v1/accounts/transfer/[acc-id1]/[acc-id2] USER
+POST   /api/v1/accounts/[id]/to/external/[id]        USER
+GET    /api/v1/accounts/[id]/history                 USER
+GET    /api/v1/accounts/[id]/card                    USER
+POST   /api/v1/accounts/[id]/card                    USER
+POST   /api/v1/accounts/[id]/card/new                USER
+POST   /api/v1/accounts/withdraw/[id]                BANK
+POST   /api/v1/accounts/deposit/[id]                 BANK
+***
+GET    /api/v1/external                              USER 
+POST   /api/v1/external/new                          USER
+POST   /api/v1/external/[id]                         USER
+DELETE /api/v1/external/[id]                         USER
+POST   /api/v1/external/[id]/to/accounts/[id]        USER
+***
+GET    /api/v1/bill-pay                              USER
+POST   /api/v1/bill-pay/new                          USER
+POST   /api/v1/bill-pay/[id]                         USER
+DELETE /api/v1/bill-pay/[id]                         USER
+GET    /api/v1/bill-pay/[id]/history                 USER
+***
+GET    /api/v1/notifications                         USER
+POST   /api/v1/notifications/new                     USER
+POST   /api/v1/notifications/[id]                    USER
+DELETE /api/v1/notifications/[id]                    USER
+------ --------------------------------------------- ----
