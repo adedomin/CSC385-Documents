@@ -66,39 +66,40 @@ Notifications should be useful to the user and should only expose a part of what
 		4. The web application will also allow users to specify a website url to call when notifications become available which will allow users to use their own notification services or a third party notification service. 
 			1. all notification data will be sent via a POST or PUT and only over a secure connection.
 
-### 3.1.4. Views, APIs and Interactions
+### 3.1.4. APIs and Interactions
 
-The user shall have the ability to view things such as current account balance and to do things like create new accouts, transfer money between accounts and so on.
-
-This is the list of all API routes
+Before beginning the spec, it is wise to first indicate the routes that users, admins and the automated bank system will use to interact with the web application.
 
 Verb   Path                                          Role
------- --------------------------------------------- ----
-GET    /                                             NONE
+------ --------------------------------------------- --------
+GET    /                                             NONE[^1]
 GET    /login                                        NONE
 POST   /login                                        NONE
 GET    /logout                                       NONE
 GET    /signup                                       NONE
 POST   /signup                                       NONE
 ***
-GET    /api/v1/user                                  USER
+GET    /api/v1/user                                  USER[^2]
 POST   /api/v1/user                                  USER
-GET    /api/v1/user/[id]                             ADMN
-POST   /api/v1/user/[id]                             ADMN
+POST   /api/v1/user/new                              USER
+GET    /api/v1/user/[name]                           ADMN[^3]
+POST   /api/v1/user/[name]                           ADMN
+GET    /api/v1/user/[name]/reset-pass                NONE
+GET    /api/v1/user/[name]/reset-pass/[key]          NONE
 ***
 GET    /api/v1/accounts                              USER
 POST   /api/v1/accounts                              USER
 POST   /api/v1/accounts/new                          USER
 GET    /api/v1/accounts/[id]                         USER
 DELETE /api/v1/accounts/[id]                         ADMN
-GET    /api/v1/accounts/search/[name]                USER
-POST   /api/v1/accounts/transfer/[acc-id1]/[acc-id2] USER
+GET    /api/v1/accounts/search/[name]                ADMN
+POST   /api/v1/accounts/transfer/[id1]/to/[id2]      USER
 POST   /api/v1/accounts/[id]/to/external/[id]        USER
 GET    /api/v1/accounts/[id]/history                 USER
 GET    /api/v1/accounts/[id]/card                    USER
 POST   /api/v1/accounts/[id]/card                    USER
 POST   /api/v1/accounts/[id]/card/new                USER
-POST   /api/v1/accounts/withdraw/[id]                BANK
+POST   /api/v1/accounts/withdraw/[id]                BANK[^4]
 POST   /api/v1/accounts/deposit/[id]                 BANK
 ***
 GET    /api/v1/external                              USER 
@@ -117,4 +118,62 @@ GET    /api/v1/notifications                         USER
 POST   /api/v1/notifications/new                     USER
 POST   /api/v1/notifications/[id]                    USER
 DELETE /api/v1/notifications/[id]                    USER
------- --------------------------------------------- ----
+------ --------------------------------------------- --------
+
+[^1]: NONE role means the user does not need to be logged in.
+[^2]: USER role means the user is a regular, authenticated user.
+[^3]: ADMN role means an administrator role.
+[^4]: BANK role is a special role to syncronize the bank's internal state with the web app.
+
+### 3.1.4.1 Logins
+
+The login paths, /login, /logout, etc, are paths where users can initiate a session with the web application.
+
+  1.The Application will serve forms created by server side templates to any of these paths.
+	1. The /login form will be a simple two field form which will ask the user for a username and a password.
+	2. The /login form will also offer a link to sign up for an account, a reset password link or a link to contact customer support.
+	3. The /logout link will return a message indicating the user successfully logged out.
+	4. The /signup form will return a form object which will ask a user for the following information shown in the table below:
+
+Field         Type     Description
+------------- -------- ---------------------------------------------------
+first         String   The user's real, first name.
+last          String   The user's real, last name.
+email         String   The user's email, also their username.
+phone         String   the user's phone number.
+***
+password      Password The user's password.
+verifyPass    Password The user's password repeated to ensure correctness.
+***
+streetAddress String   The user's street address.
+city          String   The city the street address resides in.
+state         Combobox the state the user resides in.
+***
+Other         unknown  other information may be requested.
+------------- -------- ---------------------------------------------------
+
+### 3.1.4.2 User
+
+  1. The user routes, starting with /api/v1/user shall allow the user to do the following.
+	1. When the user asks for /api/v1/user, he shall recieve his account information; the user's password is **NOT** returned.
+	2. When the user sends part of, or a completely new model, as a POST request to the above route, the web application shall apply the fields, that are allowed to be changed, to their user profile and the changes will be saved into the database.
+	3. the /api/v1/user/new route will allow users to create new users in an automated fashion. It takes the same data as the /signup form.
+  2. If the user is an admin, the admin shall be allowed to do the following.
+	1. See **ALL** data about any given user, minus that user's password.
+	2. Change any field in the user's profile except for their password.
+  3. If the user needs to reset their password, they shall make a query to do so at /api/v1/user/[the username]/reset-pass.
+	1. The user's email will be notified of the request and will contain a link where a user can go to and change their password.
+	2. The user, once navigated to the link will be given a form to change their password; the form will contain password, and a duplicate password field to verify they are both the same.
+
+### 3.1.4.3 Accounts
+
+This is the most complex portion of the web application.
+This api allows for many actions, from retrieving the the status of accouts, but also transaction history (up to 180 days), inter-account transfers, withdrawls and deposits.
+
+### 3.1.4.4 External Accounts
+
+This section describes the interaction between internal accounts and external accounts at other organizations.
+
+### 3.1.4.5 Bill Payer API
+
+### 3.1.4.6 Notifications
