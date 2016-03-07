@@ -18,9 +18,6 @@ header-includes:
 	- \fancyfoot[LE,RO]{\thepage}
 ---
 
-3. Requirements
-===============
-
 3.1. Functional Requirements
 ----------------------------
 
