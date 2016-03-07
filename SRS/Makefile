@@ -1,15 +1,18 @@
 DOC=pandoc
-DOCFLAGS=--toc
-DOCNAME=group4-SRS
+DOCFLAGS=--toc --css style/buttondown.css --self-contained
+DOCNAME=output/group4-SRS
 DOCOBJ=sections/**/*.md
 
 all: pdf
 	
 pdf:
-	$(DOC) $(DOCOBJ) -o $(DOCNAME).pdf $(DOCFLAGS)
+	$(DOC) $(DOCFLAGS) $(DOCOBJ) -o $(DOCNAME).pdf
 
 docx:
-	$(DOC) $(DOCOBJ) -o $(DOCNAME).docx $(DOCFLAGS)
+	$(DOC) $(DOCFLAGS) $(DOCOBJ) -o $(DOCNAME).docx
 
-remove_doc:
-	rm $(DOCNAME)
+html:
+	$(DOC) $(DOCFLAGS) $(DOCOBJ) -o $(DOCNAME).html
+
+remove_docs:
+	rm $(DOCNAME).*
