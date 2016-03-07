@@ -2,7 +2,7 @@
 title: 
 	- SRS for Group 4 eBanking Web App
 author:
-    - Anthony DeDominic \<[dedominica@my.easternct.edu](mailto:dedominica@my.easternct.edu)\>
+	- Anthony DeDominic \<[dedominica@my.easternct.edu](mailto:dedominica@my.easternct.edu)\>
 	- Courtney Combs \<[combsco@my.easternct.edu](mailto:combsco@my.easternct.edu)\>
 	- Jeremy Drexler \<[drexlerj@my.easternct.edu](mailto:drexlerj@my.easternct.edu)\>
 	- Kevin Bailey \<[baileyk@my.easternct.edu](mailto:baileyk@my.easternct.edu)\>

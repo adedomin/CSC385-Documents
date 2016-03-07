@@ -1,12 +1,15 @@
 DOC=pandoc
 DOCFLAGS=--toc
-DOCNAME=group4-SRS.pdf
+DOCNAME=group4-SRS
 DOCOBJ=sections/**/*.md
 
-all: doc
+all: pdf
 	
-doc:
-	$(DOC) $(DOCOBJ) -o $(DOCNAME) $(DOCFLAGS)
+pdf:
+	$(DOC) $(DOCOBJ) -o $(DOCNAME).pdf $(DOCFLAGS)
+
+docx:
+	$(DOC) $(DOCOBJ) -o $(DOCNAME).docx $(DOCFLAGS)
 
 remove_doc:
 	rm $(DOCNAME)
