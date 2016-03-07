@@ -1,5 +1,25 @@
-3 Requirements
-==============
+---
+title: 
+	- Requirements Section 3
+author:
+    - Anthony DeDominic \<dedominica@my.easternct.edu\>
+date: \today{}
+geometry: 
+	- margin=3cm
+fontsize: 
+	- 12pt
+fontfamily: 
+	- mathpazo
+header-includes:
+	- \usepackage{fancyhdr}
+	- \pagestyle{fancy}
+	- \fancyhead[CO,CE]{}
+	- \fancyfoot[CO,CE]{eBanking - Group 4}
+	- \fancyfoot[LE,RO]{\thepage}
+---
+
+3. Requirements
+===============
 
 3.1. Functional Requirements
 ----------------------------
@@ -92,9 +112,6 @@ POST   /api/v1/accounts                              USER
 POST   /api/v1/accounts/new                          USER
 GET    /api/v1/accounts/[id]                         USER
 DELETE /api/v1/accounts/[id]                         ADMN
-GET    /api/v1/accounts/search/[name]                ADMN
-POST   /api/v1/accounts/transfer/[id1]/to/[id2]      USER
-POST   /api/v1/accounts/[id]/to/external/[id]        USER
 GET    /api/v1/accounts/[id]/history                 USER
 GET    /api/v1/accounts/[id]/card                    USER
 POST   /api/v1/accounts/[id]/card                    USER
@@ -102,10 +119,15 @@ POST   /api/v1/accounts/[id]/card/new                USER
 POST   /api/v1/accounts/withdraw/[id]                BANK[^4]
 POST   /api/v1/accounts/deposit/[id]                 BANK
 ***
-GET    /api/v1/external                              USER 
+GET    /api/v1/external                              USER
 POST   /api/v1/external/new                          USER
 POST   /api/v1/external/[id]                         USER
 DELETE /api/v1/external/[id]                         USER
+***
+GET    /api/v1/transfers                             USER
+DELETE /api/v1/transfers/[id]                        USER
+POST   /api/v1/accounts/[id1]/to/[id2]               USER
+POST   /api/v1/accounts/[id]/to/external/[id]        USER
 POST   /api/v1/external/[id]/to/accounts/[id]        USER
 ***
 GET    /api/v1/bill-pay                              USER
@@ -129,7 +151,7 @@ DELETE /api/v1/notifications/[id]                    USER
 
 The login paths, /login, /logout, etc, are paths where users can initiate a session with the web application.
 
-  1.The Application will serve forms created by server side templates to any of these paths.
+  1. The Application will serve forms created by server side templates to any of these paths.
 	1. The /login form will be a simple two field form which will ask the user for a username and a password.
 	2. The /login form will also offer a link to sign up for an account, a reset password link or a link to contact customer support.
 	3. The /logout link will return a message indicating the user successfully logged out.
@@ -170,10 +192,67 @@ Other         unknown  other information may be requested.
 This is the most complex portion of the web application.
 This api allows for many actions, from retrieving the the status of accouts, but also transaction history (up to 180 days), inter-account transfers, withdrawls and deposits.
 
+  1. The system shall return all the user's Accounts when the user accessess /api/v1/accounts
+	1. The web application shall allow for a user to create a new account through /api/v1/accounts/new
+	2. User's shall be allowed to fetch the information of just one account via /api/v1/accounts/[id].
+	3. Only a admin can remove accounts as the value of the account needs to be migrated in some way. The removal will delete the Database entry for that account including the credit cards and so on.
+	4. The user shall be able to transfer a sum amount from an account to another account.
+		1. The system shall not transfer so much that there is not a negative balance.
+		2. The system shall allow a user to define a date and time to delay the transfer. If the balance is insufficient the transaction will fail.
+		3. The system shall allow a user to see all transactions and allow said user to cancel or delete them at any time.
+	5. The user shall be allowed to issue a bank card (debit) for any and all accounts the user has open.
+	6. The user shall be able to delete cards assuming there is no outstanding balances or overdrafts.
+	
 ### 3.1.4.4 External Accounts
 
 This section describes the interaction between internal accounts and external accounts at other organizations.
 
+  1. Users shall be able to add external banking accounts
+	1. the user shall be able to create external bank accounts to be tracked by providing the account and routing number.
+    2. The user shall be able to delete these accounts.
+	3. The user can also transfer money to these accounts, or from these accounts if so desired.
+
 ### 3.1.4.5 Bill Payer API
 
+  1. The web app shall provide corporate partners to allow for automated bill paying.
+	1. Users shall be able to select from providers and schedule for automatic bill paying.
+	2. Users shall be able to retrieve the list of providers the user is automatically paying.
+	3. Users shall be able to delete these automatic bill paying at any time.
+
 ### 3.1.4.6 Notifications
+
+  1. The web application shall, for convenience, shall offer notifications for the user.
+	1. The user shall be able to set up a new notification service.
+		1. The user shall be able to pick one of the following methods for notification; all notification types will have an associated queue of unread notifications. Once the queue is sent to the end-points, the notification is removed from the system.
+		2. The user shall be able to choose to be notified via email.
+		3. The user shall be able to choose to be notified via text messages. (MAY NEVER BE IMPLEMENTED DUE TO BUDGET AND OTHER CONSTRAINTS)
+		4. The user shall be able to choose to be notified via a notification app built for the web app.
+		5. Users wishing to use third party notification services shall be able to specify a callback url that the webapp will send the notification through.
+
+3.2. Nonfunctional Requirements
+-------------------------------
+
+The Application has many security and operational concerns. Users can potentially lose money through insecurities so it's critical the application is built securely and to allow for operations to assist users who may be defrauded.
+
+### 3.2.1. General Security
+
+Security is paramount for the application. The application must make use of cryptographically secure transportation like TLS.
+To ensure our user's security, it is required that architecture, such as the database, must be password secured or behind a firewall preventing it from listening to the outside world.
+
+The web application must make use of framework technologies.
+Frameworks are built and designed around securely and easily serving content over the web.
+Security concerns pertaining to the framework are also handled externally saving time.
+
+### 3.2.2. Scalibility
+
+The application should be designed to be capable of scaling.
+The Application should be capable of being load balanced to allow for easy scalibility.
+To ensure the application can be load balanced, the application should rely on external servers for storage and databases.
+So The application, or applications, shall connect to remote storage pools and databases for their persistent storage needs.
+This will allow all the running instances of the app to share their states with one another.
+
+Databases, like MongoDB, generally support mechanisms like sharding to allow for scaling up database requirements.
+Because of this, MongoDB was chosen for this application.
+MongoDB also has the ability to serve as a general purpose filesystem using GridFS.
+
+### 3.2.3. Operations
