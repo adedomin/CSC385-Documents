@@ -18,7 +18,7 @@ Excluding functions of the banking firm irrelevant to the automated banking syst
 
 ### 2.3.2. Web Interface Overview
 
-![2.4.2.1.[^fig3]](./sections/2/media/image3.jpeg){width="6.5in" height="5.188888888888889in"}
+![2.3.2.1.[^fig3]](./sections/2/media/image3.jpeg){width="6.5in" height="5.188888888888889in"}
 
 [^fig3]: Clickstream diagram for the system’s front-end interface.
 

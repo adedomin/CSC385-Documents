@@ -75,7 +75,6 @@ POST   /login                                        NONE
 GET    /logout                                       NONE
 GET    /signup                                       NONE
 POST   /signup                                       NONE
-***
 GET    /api/v1/user                                  USER[^2]
 POST   /api/v1/user                                  USER
 POST   /api/v1/user/new                              USER
@@ -83,7 +82,6 @@ GET    /api/v1/user/[name]                           ADMN[^3]
 POST   /api/v1/user/[name]                           ADMN
 GET    /api/v1/user/[name]/reset-pass                NONE
 GET    /api/v1/user/[name]/reset-pass/[key]          NONE
-***
 GET    /api/v1/accounts                              USER
 POST   /api/v1/accounts                              USER
 POST   /api/v1/accounts/new                          USER
@@ -95,24 +93,20 @@ POST   /api/v1/accounts/[id]/card                    USER
 POST   /api/v1/accounts/[id]/card/new                USER
 POST   /api/v1/accounts/withdraw/[id]                BANK[^4]
 POST   /api/v1/accounts/deposit/[id]                 BANK
-***
 GET    /api/v1/external                              USER
 POST   /api/v1/external/new                          USER
 POST   /api/v1/external/[id]                         USER
 DELETE /api/v1/external/[id]                         USER
-***
 GET    /api/v1/transfers                             USER
 DELETE /api/v1/transfers/[id]                        USER
 POST   /api/v1/accounts/[id1]/to/[id2]               USER
 POST   /api/v1/accounts/[id]/to/external/[id]        USER
 POST   /api/v1/external/[id]/to/accounts/[id]        USER
-***
 GET    /api/v1/bill-pay                              USER
 POST   /api/v1/bill-pay/new                          USER
 POST   /api/v1/bill-pay/[id]                         USER
 DELETE /api/v1/bill-pay/[id]                         USER
 GET    /api/v1/bill-pay/[id]/history                 USER
-***
 GET    /api/v1/notifications                         USER
 POST   /api/v1/notifications/new                     USER
 POST   /api/v1/notifications/[id]                    USER
@@ -140,14 +134,11 @@ first         String   The user's real, first name.
 last          String   The user's real, last name.
 email         String   The user's email, also their username.
 phone         String   the user's phone number.
-***
 password      Password The user's password.
 verifyPass    Password The user's password repeated to ensure correctness.
-***
 streetAddress String   The user's street address.
 city          String   The city the street address resides in.
 state         Combobox the state the user resides in.
-***
 Other         unknown  other information may be requested.
 ------------- -------- ---------------------------------------------------
 
