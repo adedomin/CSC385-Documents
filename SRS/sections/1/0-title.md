@@ -13,9 +13,8 @@ fontfamily:
 header-includes:
 	- \usepackage{fancyhdr}
 	- \pagestyle{fancy}
-	- \fancyhead[CO,CE]{}
-	- \fancyfoot[CO,CE]{eBanking - Group 4}
-	- \fancyfoot[LE,RO]{\thepage}
+	- \fancyfoot[L]{eBanking Webapp}
+	- \fancyfoot[R]{\thepage}
 ---
 
 1. Introduction
