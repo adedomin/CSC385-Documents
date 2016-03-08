@@ -4,9 +4,9 @@
 The automated banking system is itself in the domain of a larger banking system.
 Excluding functions of the banking firm irrelevant to the automated banking system.
 
-![2.3.1.](./sections/2/media/image2.jpeg){width="6.5in" height="3.688888888888889in"}
+![2.3.1.[^fig2]](./sections/2/media/image2.jpeg){width="6.5in" height="3.688888888888889in"}
 
-Figure 2.3.1 - System context diagram of the automated banking system. Highlights the outside forces affecting the system.
+[^fig2]: System context diagram of the automated banking system. Highlights the outside forces affecting the system.
 
   * The management to whom the system reports. This party is responsible for system maintenance and evolution.
 
@@ -18,9 +18,9 @@ Figure 2.3.1 - System context diagram of the automated banking system. Highlight
 
 ### 2.3.2. Web Interface Overview
 
-![2.4.2.1.](./sections/2/media/image3.jpeg){width="6.5in" height="5.188888888888889in"}
+![2.4.2.1.[^fig3]](./sections/2/media/image3.jpeg){width="6.5in" height="5.188888888888889in"}
 
-Figure 2.4.2.1 - Clickstream diagram for the system’s front-end interface.
+[^fig3]: Clickstream diagram for the system’s front-end interface.
 
 This is a representation of the tasks a user can complete in a given session with the banking system.
 The diagram assumes the user begins on the home page, in which they may or may not be logged in.
