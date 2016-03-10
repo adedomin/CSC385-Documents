@@ -1,5 +1,5 @@
 ---
-title: SRS - eBanking Web App
+title: SPMP - eBanking Web App
 author:
 	- Group Four
 	- Anthony DeDominic \<[dedominica@my.easternct.edu](mailto:dedominica@my.easternct.edu)\>
@@ -13,8 +13,7 @@ fontfamily: mathpazo
 header-includes:
 	- \usepackage{fancyhdr}
 	- \pagestyle{fancy}
-	- \fancyfoot[L]{eBanking - SRS}
+	- \fancyfoot[L]{eBanking - SPMP}
 	- \fancyfoot[C]{}
 	- \fancyfoot[R]{\thepage}
 ---
-

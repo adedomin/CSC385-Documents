@@ -30,8 +30,8 @@ This is because the data models and the server side logic is distributed.
 
 ### 3.2.4. Continuous Integration and Deployment
 
-The system's source code must be managed in away that allows for automated building tools like Jenkins to generate deployable and versioned binaries.
-Binaries should be managed in away that allows for automatic deployment to production systems.
+The system's source code must be managed in a way that allows for automated building tools like Jenkins to generate deployable and versioned binaries.
+Binaries should be managed in a way that allows for automatic deployment to production systems.
 
 This implies all code and configurations need to be hosted in a remote source code management system such as a git repository hosted on github.
 Binaries must be sendable to a server with accompanying versioning information.

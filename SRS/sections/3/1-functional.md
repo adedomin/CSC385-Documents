@@ -189,7 +189,7 @@ This section describes the interaction between internal accounts and external ac
 
 ### 3.1.4.6 Notifications
 
-  1. The web application shall, for convenience, shall offer notifications for the user.
+  1. The web application shall, for convenience, offer notifications for the user.
 	1. The user shall be able to set up a new notification service.
 		1. The user shall be able to pick one of the following methods for notification; all notification types will have an associated queue of unread notifications. Once the queue is sent to the end-points, the notification is removed from the system.
 		2. The user shall be able to choose to be notified via email.
