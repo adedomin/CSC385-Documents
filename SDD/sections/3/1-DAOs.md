@@ -101,7 +101,7 @@ These factories should return query objects that will properly handle sanitizing
 
 This DAO shall access user's transaction and other account changes.
 
-  * getHistory(String historyId, function)
+  * getHistory(String accountId, function)
   * saveHistory(History history, function)
   * deleteHistory(String historyId, function)
 
@@ -137,6 +137,7 @@ These factories should return query objects that will properly handle sanitizing
 This DAO should only be used by core logic to persist pending transactions.
 
   * getAllTransactions(function)
+  * setNewTransaction(Transaction transaction, function)
   * deleteTransaction(String transactionid, function)
 
 This object is special, as it is intended to persist potentially interrupted transactions.
@@ -144,6 +145,7 @@ This object is special, as it is intended to persist potentially interrupted tra
 The callback arguments must take the following:
 
   * getAllTransactions() -> function (err, transactions)
+  * saveNewTransaction() -> function (err, transaction)
   * deleteTransaction() -> function (err)
 
 The callback for getAllTransactions should be expected to register all the transactions to be executed in the future.

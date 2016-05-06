@@ -22,7 +22,7 @@ header-includes:
 
 The following definitions may be strewn across the document.
 
-  * 2.1. DAO: Data Access Object. An object pattern that abstracts database calls so that other databases could be used without chaning other code.
+  * 2.1. DAO: Data Access Object. An object pattern that abstracts database calls so that other databases could be used without changing other code.
   * 2.2. MVC: Model View Control, Design pattern that allows for object abstraction
   * 2.3. Node.js: Javascript for backend servers.
   * 2.4. express.js: a Node.js framework to simplify the creation of HTTP driven web applications.

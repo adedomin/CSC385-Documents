@@ -28,16 +28,10 @@ It should include all the following data:
 
   * String username
   * String email <- may be same as above
-  * String hashedPassword
-  * String passwordSalt
+  * String hashedPassword <- includes salt, rounds and algorithms used.
   * [String] accountIds
-  * [String] externalAcctIds
-  * [String] sharedAccountIds
-  * [String] billPayJobIds
-  * String historyId
-  * [String] pendingTransferIds
 
-Most of the arrays merely point to id's to other objects, which can be accessed with their proper DAO.
+The array merely points to id's of the owned account objects, this is practical since accounts can be shared and have no set owner.
 
 ### 3.2.2. Account
 
@@ -65,14 +59,18 @@ Types, like double, simply can't give the granularity for accurate withdraws or 
 This object should make no logic for such functionality
 
 The ACL should be some kind of list of users and their roles on the account.
-They should be in a form like. [{ username : [roles] }, { user2: [roles] }, ...]
+They should be in a form like:
+
+	{
+		<username>: [role1, role2]
+	}
 
 roles should be one of the following:
 
   * read, they can see the account's details
   * send, they can send money to the account, but not necessarily see the details.
   * charge, they can charge up to a limit, should be reversible
-  * full, they can completely control the account, by default the user who created the account has this role.
+  * owner, they can completely control the account, by default the user who created the account has this role.
 
 Debit card should be an object that includes an indeterminate member variable/s that describe an ATM card for the account.
 It should at least have a card number.
@@ -84,18 +82,16 @@ The transaction object shall allow a user to defer or to set a recurring transfe
 In the bill pay type, the job is a recurrent transfer to an organization's account.
 
   * String TransactionId
-  * Boolean isBillPay
-  * Date date <- when to fire off
-  * String fromAcctId
-  * String toAcctId
-  * String type
+  * Boolean isRecurring 
+  * Date startAt <- when to fire off
+  * String to <- an account id
+  * String from <- an account id
   * Decimal transferAmount
-  * String notes
+  * String notes <- optional
 
 ### 3.2.4. History
 
   * String accountId <- account effected
-  * String type <- withdraw/deposit
   * Date date <- date of transaction
   * String notes <- what happened
   * Decimal amount <- changed amount
@@ -104,4 +100,3 @@ The notes field should have a message that describes what happened.
 For instance:
 
 	%TYPE - %USER_ACCOUNT to %OTHER_ACCOUNT
-
