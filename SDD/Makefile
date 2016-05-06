@@ -6,7 +6,7 @@ DOCOBJ=sections/*/*.md
 all: pdf
 	
 pdf:
-	$(DOC) $(DOCFLAGS) $(DOCOBJ) -o $(DOCNAME).pdf
+	$(DOC) $(DOCFLAGS) $(DOCOBJ) -o ../pdf-outputs/$(DOCNAME).pdf
 
 html:
 	$(DOC) $(DOCFLAGS) $(DOCOBJ) -o $(DOCNAME).html
