@@ -1,0 +1,95 @@
+digraph db {
+
+	node [shape=none];
+	graph [overlap="false" splines="true"];
+
+	user [
+		label= <<table border="1" cellborder="1">
+			<tr><td port="port1" bgcolor="grey">Users</td></tr>
+			<tr><td port="port2">UserID</td></tr>
+			<tr><td port="port3">Username</td></tr>
+			<tr><td port="port4">hashedPass</td></tr>
+			<tr><td port="port5">[account Ids]</td></tr>
+		</table>>
+	];
+
+	session [
+		label= <<table border="1" cellborder="1">
+			<tr><td port="port1" bgcolor="grey">Sessions</td></tr>
+			<tr><td port="port2">SessionID</td></tr>
+			<tr><td port="port3">token</td></tr>
+			<tr><td port="port4">value</td></tr>
+		</table>>
+	];
+
+	logging [
+		label= <<table border="1" cellborder="1">
+			<tr><td port="port1" bgcolor="grey">Logging</td></tr>
+			<tr><td port="port2">LoggingId</td></tr>
+			<tr><td port="port3">username</td></tr>
+			<tr><td port="port4">postData</td></tr>
+			<tr><td port="port5">requestUrl</td></tr>
+			<tr><td port="port6">ip</td></tr>
+			<tr><td port="port6">date</td></tr>
+		</table>>
+	];
+	
+	account [
+		label= <<table border="1" cellborder="1">
+			<tr><td port="port1" bgcolor="grey">Accounts</td></tr>
+			<tr><td port="port2">AccountID</td></tr>
+			<tr><td port="port3">balance</td></tr>
+			<tr><td port="port4">
+				<table border="0" cellborder="1">
+					<tr><td>Username</td><td>[roles]</td></tr>
+				</table>
+			</td></tr>
+			<tr><td port="port5">[account Ids]</td></tr>
+		</table>>
+	];
+
+	transactions [
+		label= <<table border="1" cellborder="1">
+			<tr><td port="port1" bgcolor="grey">Transactions</td></tr>
+			<tr><td port="port2">TransactionID</td></tr>
+			<tr><td port="port3">owner</td></tr>
+			<tr><td port="port4">to</td></tr>
+			<tr><td port="port5">from</td></tr>
+			<tr><td port="port6">startAt</td></tr>
+			<tr><td port="port7">amount</td></tr>
+			<tr><td port="port8">notes</td></tr>
+		</table>>
+	];
+
+	history [
+		label= <<table border="1" cellborder="1">
+			<tr><td port="port1" bgcolor="grey">History</td></tr>
+			<tr><td port="port2">HistoryID</td></tr>
+			<tr><td port="port3">AccountID</td></tr>
+			<tr><td port="port4">changedBy</td></tr>
+			<tr><td port="port5">amount</td></tr>
+			<tr><td port="port6">date</td></tr>
+		</table>>
+	];
+
+	user:port5 -> account:port2 [label="findById"];
+	user:port5 -> account:port4 [label="findByUsername"];
+	user:port3 -> transactions:port3 [label="findByUsername"];
+	user:port5 -> history:port3 [label="findById"];
+	user:port4 -> session:port3 [label="generatedFrom"];
+
+	session:port4 -> user:port3 [label="verifySession"];
+
+	session:port4 -> logging:port3 [label="logRequest"];
+
+	account:port4 -> user:port3 [label="verifyAccess"];
+
+	transactions:port4 -> account:port2 [label="findById"];
+	transactions:port5 -> account:port2 [label="findById"];
+	transactions:port7 -> account:port3 [label="(+/-) modifies by"];
+	transactions:port4 -> history:port3 [label="changed acct"];
+	transactions:port5 -> history:port3 [label="changed acct"];
+	transactions:port7 -> history:port5 [label="changed amount"];
+
+	history:port3 -> account:port2 [label="findById"];
+}
